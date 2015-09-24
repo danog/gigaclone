@@ -1,0 +1,13 @@
+language: bash
+
+sudo: required
+addons:
+  apt:
+    packages:
+    - wget
+    - grep
+    - sed
+
+script: ". ./gigaclone"
+
+
