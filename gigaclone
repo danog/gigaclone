@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 dir="$PWD/copy"
-mkdir
+mkdir $dir
 cd $dir
 wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz && cd log && awk '!seen[$0]++' * | grep -v 404 | grep -v 403 | cut -d'H' -f1 | sed 's/^/http:\/\/profile\.gigaset\.net//g' | awk '!seen[$0]++' > ../tmp.txt && cd ../ && rm -R log logs.tgz && wget -i tmp.txt -x -N -nc && rm tmp.txt
 wget https://copy.com/install/linux/Copy.tgz
