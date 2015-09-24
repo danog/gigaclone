@@ -3,8 +3,22 @@ set -e
 dir="$PWD/copy"
 mkdir $dir
 
-wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz && cd log && awk '!seen[$0]++' * | grep -v 404 | grep -v 403 | cut -d'H' -f1 | sed 's/^/http:\/\/profile\.gigaset\.net/g' | awk '!seen[$0]++' > ../tmp.txt && cd ../ && rm -R log logs.tgz && cd $dir && wget -i ../tmp.txt -x -N -nc && rm ../tmp.txt
-cd ..
+wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
+
+cd log
+
+awk '!seen[$0]++' * >../tmp
+grep -v 404 ../tmp >../tmp2
+grep -v 403 ../tmp2 >../tmp
+cut -d'H' -f1 ../tmp >../tmp2
+sed 's/^/http:\/\/profile\.gigaset\.net/g' ../tmp2 >../tmp
+
+awk '!seen[$0]++' ../tmp >../tmp.txt
+cd ../
+rm -R log logs.tgz
+cd $dir
+wget -i ../tmp.txt -x -N -nc && rm ../tmp.txt
+
 wget https://copy.com/install/linux/Copy.tgz
 tar xvzf Copy.tgz
 cd copy/x86_64
