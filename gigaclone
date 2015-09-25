@@ -11,11 +11,11 @@ wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
 cd log
 for f in ./*;do {
 echo "Remove 404 for $f"
-grep -v 404 $f >$tmp/tmp2
+sed -i '/.*404.*/d' $f
 echo "Remove 403 for $f"
-grep -v 403 $tmp/tmp2 >$tmp/tmp
+sed -i '/.*403.*/d' $f
 echo "Keep only URLS for $f"
-cut -d'H' -f1 $tmp/tmp >$tmp/tmp2
+cut -d'H' -f1 $f >$tmp/tmp2
 echo "Insert URL for $f"
 sed 's/^/http:\/\/profile\.gigaset\.net/g' $tmp/tmp2 >$tmp/tmp
 echo "Remove duplicates for $f"
