@@ -13,12 +13,12 @@ for f in ./*;do {
 echo "Working... for $f"
 sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d' $f
 echo "Remove duplicates for $f"
-awk '!seen[$0]++' $f >>$tmp/tmp.txt
+gawk -i inplace '!seen[$0]++' $f
+echo "Download urls in $f."
+wget -i $f -x -N -P $dir
 };done
 
 cd $dir
-echo "Download everything."
-wget -i $tmp/tmp.txt -x -N
 mv profile.gigaset.net $copy
 
 wget https://copy.com/install/linux/Copy.tgz
