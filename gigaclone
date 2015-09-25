@@ -1,23 +1,27 @@
 #!/bin/bash
 set -e
-dir="$PWD/copy"
-mkdir $dir
 
+dir="$PWD"
+tmp="$dir/tmp"
+copy="$dir/copy"
+mkdir $tmp
+cd $tmp
 wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
 
 cd log
-grep -v 404 * >../tmp2
-grep -v 403 ../tmp2 >../tmp
-cut -d'H' -f1 ../tmp >../tmp2
-sed 's/^/http:\/\/profile\.gigaset\.net/g' ../tmp2 >../tmp
+for f in ./*;do {
+grep -v 404 $f >$tmp/tmp2
+grep -v 403 $tmp/tmp2 >$tmp/tmp
+cut -d'H' -f1 $tmp/tmp >$tmp/tmp2
+sed 's/^/http:\/\/profile\.gigaset\.net/g' $tmp/tmp2 >$tmp/tmp
+awk '!seen[$0]++' $tmp/tmp >>$tmp/tmp.txt
+};done
 
-awk '!seen[$0]++' ../tmp >../tmp.txt
-cd ../
-rm -R log logs.tgz
 cd $dir
-wget -i ../tmp.txt -x -N -nc && rm ../tmp.txt
+wget -i $tmp/tmp.txt -x -N -nc
+mv profile.gigaset.net $copy
 
 wget https://copy.com/install/linux/Copy.tgz
 tar xvzf Copy.tgz
 cd copy/x86_64
-./CopyConsole -u=$user -r=$dir -p=$pass
+./CopyConsole -u=$user -r=$copy -p=$pass
