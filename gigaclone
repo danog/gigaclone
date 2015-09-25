@@ -18,7 +18,7 @@ awk '!seen[$0]++' $f >>$tmp/tmp.txt
 
 cd $dir
 echo "Download everything."
-wget -i $tmp/tmp.txt -x -N -nc
+wget -i $tmp/tmp.txt -x -N
 mv profile.gigaset.net $copy
 
 wget https://copy.com/install/linux/Copy.tgz
