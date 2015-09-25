@@ -7,7 +7,7 @@ addons:
     - grep
     - sed
     - gawk
-
+    - fdupes
 
 script: ". ./gigaclone"
 
