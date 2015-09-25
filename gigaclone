@@ -10,14 +10,20 @@ wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
 
 cd log
 for f in ./*;do {
+echo "Remove 404 for $f"
 grep -v 404 $f >$tmp/tmp2
+echo "Remove 403 for $f"
 grep -v 403 $tmp/tmp2 >$tmp/tmp
+echo "Keep only URLS for $f"
 cut -d'H' -f1 $tmp/tmp >$tmp/tmp2
+echo "Insert URL for $f"
 sed 's/^/http:\/\/profile\.gigaset\.net/g' $tmp/tmp2 >$tmp/tmp
+echo "Remove duplicates for $f"
 awk '!seen[$0]++' $tmp/tmp >>$tmp/tmp.txt
 };done
 
 cd $dir
+echo "Download everything."
 wget -i $tmp/tmp.txt -x -N -nc
 mv profile.gigaset.net $copy
 
