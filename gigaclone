@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
-
+n=0
+y=y
+until [ "$n" = "1000" ];do {
+y="$y
+y"
+n="$(($n + 1))"
+};done
 dir="$PWD"
 tmp="$dir/tmp"
 copy="$dir/copy"
@@ -11,7 +17,7 @@ wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
 cd log
 for f in ./*;do {
 echo "Working... for $f"
-sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d' $f
+sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g' $f
 echo "Remove duplicates for $f"
 awk '!seen[$0]++' $f>$tmp/1
 echo "Download urls in $f."
@@ -20,6 +26,8 @@ wget -i $tmp/1 -x -N -P $dir
 
 cd $dir
 mv profile.gigaset.net $copy
+
+fdupes -dr $copy <<< "$y"
 
 wget https://copy.com/install/linux/Copy.tgz
 tar xvzf Copy.tgz
