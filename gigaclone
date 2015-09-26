@@ -23,7 +23,7 @@ awk '!seen[$0]++' $tmp/tmp >$tmp/final
 
 cd $dir
 echo "Download everything."
-[ "$TRAVIS" = "true" ] && { wget -i $tmp/final -x -N 2>/dev/null | { echo Still working;sleep 60; } ; } || wget -i $tmp/final -x -N
+[ "$TRAVIS" = "true" ] && { wget -i $tmp/final -x -N -q | { until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; echo Still working;sleep 60;done } ; } || wget -i $tmp/final -x -N
 echo "Clean up."
 rm -r $tmp
 
