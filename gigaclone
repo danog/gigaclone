@@ -1,43 +1,38 @@
 #!/bin/bash
 set -e
-n=0
-y=1
-t() { until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; do echo Still Downloading;sleep 8m;done; }
-until [ "$n" = "1000" ];do {
-y="$y
-1"
-n="$(($n + 1))"
-};done
-dir="$PWD"
+[ "$1" = "--help" ] && echo "Script to clone the profile.gigaset.net firmware website.
+This website contains all of the provisioning data and the firmwares for Siemens Gigaset devices.
+Usage: $(basename $0) output_dir
+
+If no output dir is specified, . is the default.
+"
+[ "$1" = "" ] && dir="$PWD" || dir="$1"
 tmp="$dir/tmp"
-copy="$dir/copy"
-mkdir $tmp $tmp/usr $copy
-cd $tmp
-git clone https://github.com/adrianlopezroche/fdupes
-cd fdupes
-sed -i 's%PREFIX = \/usr\/local%PREFIX = '$tmp'\/usr%g' Makefile
-make fdupes
-make install
-export PATH="$PATH:$tmp/usr/bin"
+mkdir $tmp
 cd $tmp
 wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
-
 cd log
 for f in ./*;do {
 echo "Working... for $f"
 sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g' $f
 echo "Remove duplicates for $f"
-awk '!seen[$0]++' $f>$tmp/1
-echo "Download urls in $f."
-wget -i $tmp/1 -x -N -P $dir 2>&1 | t
+awk '!seen[$0]++' $f>>$tmp/tmp
 };done
+echo "Remove all duplicates"
+awk '!seen[$0]++' $tmp/tmp >$tmp/final
 
 cd $dir
+echo "Download everything."
+[ "$TRAVIS" = "true" ] && travis_wait wget -i $tmp/final -x -N 2>/dev/null || wget -i $tmp/1 -x -N
+echo "Clean up."
+rm -r $tmp
+
+[ "$TRAVIS" = "true" ] {
+copy="$dir/copy"
+mkdir $copy
 mv profile.gigaset.net $copy
-
-#fdupes -dr $copy <<< "$y"
-
 wget https://copy.com/install/linux/Copy.tgz
 tar xvzf Copy.tgz
 cd copy/x86_64
 ./CopyConsole -u=$user -r=$copy -p=$pass
+}
