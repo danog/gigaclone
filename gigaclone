@@ -2,7 +2,7 @@
 set -e
 n=0
 y=1
-
+t() { until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; do echo Still Downloading;sleep 8m;done; }
 until [ "$n" = "1000" ];do {
 y="$y
 1"
@@ -11,7 +11,7 @@ n="$(($n + 1))"
 dir="$PWD"
 tmp="$dir/tmp"
 copy="$dir/copy"
-mkdir $tmp $tmp/usr
+mkdir $tmp $tmp/usr $copy
 cd $tmp
 git clone https://github.com/adrianlopezroche/fdupes
 cd fdupes
@@ -25,17 +25,17 @@ wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
 cd log
 for f in ./*;do {
 echo "Working... for $f"
-sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g' $f
+sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g' $f
 echo "Remove duplicates for $f"
 awk '!seen[$0]++' $f>$tmp/1
 echo "Download urls in $f."
-wget -i $tmp/1 -x -N -P $dir -q
+wget -i $tmp/1 -x -N -P $dir | t
 };done
 
 cd $dir
 mv profile.gigaset.net $copy
 
-fdupes -dr $copy <<< "$y"
+#fdupes -dr $copy <<< "$y"
 
 wget https://copy.com/install/linux/Copy.tgz
 tar xvzf Copy.tgz
