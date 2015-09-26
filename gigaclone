@@ -29,7 +29,7 @@ sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.ne
 echo "Remove duplicates for $f"
 awk '!seen[$0]++' $f>$tmp/1
 echo "Download urls in $f."
-wget -i $tmp/1 -x -N -P $dir | t
+wget -i $tmp/1 -x -N -P $dir 2>&1 | t
 };done
 
 cd $dir
