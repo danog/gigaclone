@@ -1,7 +1,7 @@
 # Gigaclone
 
 
-This repository contains a clone of the profile.gigaset.net website. Feel free to take a look.
+This repository contains a script capable fo cloning the profile.gigaset.net website. Feel free to take a look.
 
 
 
