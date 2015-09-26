@@ -15,7 +15,8 @@ mkdir $tmp $tmp/usr
 cd $tmp
 git clone https://github.com/adrianlopezroche/fdupes
 cd fdupes
-make fdupes --prefix=$tmp/usr
+sed -i 's%PREFIX = \/usr\/local%PREFIX = '$tmp'\/usr%g' Makefile
+make fdupes
 make install
 export PATH="$PATH:$tmp/usr/bin"
 cd $tmp
