@@ -6,6 +6,9 @@ Usage: $(basename $0) output_dir
 
 If no output dir is specified, . is the default.
 "
+t() {
+  until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; do echo Still working;sleep 60;done
+}
 [ "$1" = "" ] && dir="$PWD" || dir="$1"
 tmp="$dir/tmp"
 mkdir $tmp
@@ -23,7 +26,7 @@ awk '!seen[$0]++' $tmp/tmp >$tmp/final
 
 cd $dir
 echo "Download everything."
-[ "$TRAVIS" = "true" ] && { wget -i $tmp/final -x -N -q | { until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; echo Still working;sleep 60;done } ; } || wget -i $tmp/final -x -N
+[ "$TRAVIS" = "true" ] && { wget -i $tmp/final -x -N -q | t || wget -i $tmp/final -x -N
 echo "Clean up."
 rm -r $tmp
 
