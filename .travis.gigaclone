@@ -22,7 +22,7 @@ echo "Remove all duplicates"
 awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
 mv $tmp/final $dir/urllist
 
-git clone https://${GH_TOKEN}:github.com/danog/gigaclone.git $tmp/git
+git clone https://${GH_TOKEN}@github.com/danog/gigaclone.git $tmp/git
 cd $tmp/git
 cp $dir/urllist .
 git add -A
