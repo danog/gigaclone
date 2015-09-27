@@ -6,10 +6,10 @@ Usage: $(basename $0) output_dir
 
 If no output dir is specified, . is the default.
 "
-t() {
-  until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; do echo Still working;sleep 60;done
-}
+
 [ "$1" = "" ] && dir="$PWD" || dir="$1"
+[ -d $dir ] || mkdir $dir
+wget https://github.com/danog/gigaclone/raw/master/urllist -P $dir
 tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
@@ -21,21 +21,13 @@ sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.ne
 echo "Remove duplicates for $f"
 awk '!seen[$0]++' $f>>$tmp/tmp
 };done
-echo "Remove all duplicates"
-awk '!seen[$0]++' $tmp/tmp >$tmp/final
 
 cd $dir
-echo "Download everything."
-[ "$TRAVIS" = "true" ] && { wget -i $tmp/final -x -N -q | t || wget -i $tmp/final -x -N
+echo "Remove all duplicates"
+awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
+mv $tmp/final $dir/urllist
 echo "Clean up."
 rm -r $tmp
 
-[ "$TRAVIS" = "true" ] {
-copy="$dir/copy"
-mkdir $copy
-mv profile.gigaset.net $copy
-wget https://copy.com/install/linux/Copy.tgz
-tar xvzf Copy.tgz
-cd copy/x86_64
-./CopyConsole -u=$user -r=$copy -p=$pass
-}
+echo "Download everything."
+wget -i $dir/urllist -x -N

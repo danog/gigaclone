@@ -9,6 +9,6 @@ addons:
     - gawk
     - fdupes
 
-script: ". ./gigaclone"
+script: "bash ./.travis.gigaclone"
 
 

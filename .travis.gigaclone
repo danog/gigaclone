@@ -1,0 +1,47 @@
+#!/bin/bash
+set -e
+git config --global user.name "${GIT_NAME}"
+git config --global user.email "${GIT_EMAIL}"
+git config --global push.default simple
+t() {
+  until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; do echo Still working;sleep 60;done
+}
+dir="$PWD"
+tmp="$dir/tmp"
+mkdir $tmp
+cd $tmp
+wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
+cd log
+for f in ./*;do {
+echo "Working... for $f"
+sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g' $f
+echo "Remove duplicates for $f"
+awk '!seen[$0]++' $f>>$tmp/tmp
+};done
+echo "Remove all duplicates"
+awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
+mv $tmp/final $dir/urllist
+
+git clone https://${GH_TOKEN}:github.com/danog/gigaclone.git $tmp/git
+cd $tmp/git
+cp $dir/urllist .
+git add -A
+git commit -m "Updated url list"
+git push origin master &>/dev/null
+
+cd $dir
+echo "Clean up."
+rm -r $tmp
+
+echo "Download everything."
+wget -i $dir/urllist -x -N -q -P $dir | t
+
+
+
+copy="$dir/copy"
+mkdir $copy
+mv profile.gigaset.net $copy
+wget https://copy.com/install/linux/Copy.tgz
+tar xvzf Copy.tgz
+cd copy/x86_64
+./CopyConsole -u=$user -r=$copy -p=$pass
