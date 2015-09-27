@@ -1,12 +1,25 @@
 #!/bin/bash
 set -e
-git config --global user.name "${GIT_NAME}"
-git config --global user.email "${GIT_EMAIL}"
-git config --global push.default simple
+dir="$PWD"
+git log -1 --pretty=%B | grep list && {
 t() {
   until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; do echo Still working;sleep 60;done
 }
-dir="$PWD"
+echo "Download everything."
+wget -i $dir/urllist -x -N -q -P $dir | t
+copy="$dir/copy"
+mkdir $copy
+mv profile.gigaset.net $copy
+wget https://copy.com/install/linux/Copy.tgz
+tar xvzf Copy.tgz
+cd copy/x86_64
+./CopyConsole -u=$user -r=$copy -p=$pass
+
+} || {
+
+git config --global user.name "${GIT_NAME}"
+git config --global user.email "${GIT_EMAIL}"
+git config --global push.default simple
 tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
@@ -31,17 +44,5 @@ git push origin master &>/dev/null
 
 cd $dir
 echo "Clean up."
-rm -r $tmp
-
-echo "Download everything."
-wget -i $dir/urllist -x -N -q -P $dir | t
-
-
-
-copy="$dir/copy"
-mkdir $copy
-mv profile.gigaset.net $copy
-wget https://copy.com/install/linux/Copy.tgz
-tar xvzf Copy.tgz
-cd copy/x86_64
-./CopyConsole -u=$user -r=$copy -p=$pass
+rm -fr $tmp
+}
