@@ -2,8 +2,10 @@
 set -e
 dir="$PWD"
 git log -1 --pretty=%B | grep list && {
+n=0
 t() {
-  until [ "$(ps aux | grep wget | grep -v grep)" = "" ]; do echo Still working;sleep 60;done
+  until [ "$n" = "60" ]; do n=$(($n + 1)); echo Still working;sleep 60;done
+  killall wget
 }
 echo "Download everything."
 wget -i $dir/urllist -x -N -q -P $dir | t
