@@ -4,7 +4,7 @@ dir="$PWD"
 git log -1 --pretty=%B | grep list && {
 n=0
 t() {
-  until [ "$n" = "60" ]; do n=$(($n + 1)); echo Still working;sleep 60;done
+  until [ "$n" = "60" ] || [ "$(ps aux | grep -v grep | grep wget)" = "" ]; do n=$(($n + 1)); echo Still working;sleep 60;done
   killall wget
 }
 echo "Download everything."
