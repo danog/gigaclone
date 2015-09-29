@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+
 dir="$PWD"
 git log -1 --pretty=%B | grep list && {
 n=0
@@ -18,7 +18,7 @@ cd copy/x86_64
 ./CopyConsole -u=$user -r=$copy -p=$pass
 
 } || {
-
+set -e
 git config --global user.name "${GIT_NAME}"
 git config --global user.email "${GIT_EMAIL}"
 git config --global push.default simple
