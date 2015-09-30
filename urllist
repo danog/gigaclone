@@ -9128,14 +9128,13 @@ http://profile.gigaset.net/chagall/42/13/../sht/223/sht_17.bin
 http://profile.gigaset.net/chagall/42/2/../webuil/75/wl_09.bin
 http://profile.gigaset.net/chagall/42/10/../webuil/192/wl_04.bin
 http://profile.gigaset.net/chagall/42/1/../webuil/72/wl_05.bin
-.
+
 http://profile.gigaset.net/firmware/lion_s
 http://profile.gigaset.net/firmware/lion_s/turkey-ptt
 http://profile.gigaset.net/firmware/lion_s/turkey-ptt/build.prop
 http://profile.gigaset.net/firmware/41
 http://profile.gigaset.net/firmware/41/1
 http://profile.gigaset.net/firmware/lion_hs
-http://profile.gigaset.net/firmware/lion_hs/lion__upd.bin?req=header
 http://profile.gigaset.net/firmware/sl930_disp
 http://profile.gigaset.net/firmware/sl930_disp/lion_s
 http://profile.gigaset.net/firmware/sl930_disp/lion_s/germany-retail
@@ -9161,11 +9160,8 @@ http://profile.gigaset.net/firmware/sl930_r2s2/lion_s/cts-retail/build.prop
 http://profile.gigaset.net/firmware/sl930_r2s2/lion_s/im1-retail
 http://profile.gigaset.net/firmware/sl930_r2s2/lion_s/im1-retail/build.prop
 http://profile.gigaset.net/firmware/gold_hs
-http://profile.gigaset.net/firmware/gold_hs/gold__upd.bin?req=header
 http://profile.gigaset.net/firmware/kilby_hs
-http://profile.gigaset.net/firmware/kilby_hs/kilby__upd.bin?req=header
 http://profile.gigaset.net/firmware/kilby_hs/field_trial
-http://profile.gigaset.net/firmware/kilby_hs/field_trial/kilby__upd.bin?req=header
 http://profile.gigaset.net/firmware/sl930_ltest
 http://profile.gigaset.net/firmware/sl930_ltest/lion_s
 http://profile.gigaset.net/firmware/sl930_ltest/lion_s/germany-retail
@@ -9214,16 +9210,10 @@ http://profile.gigaset.net/firmware/galilei/m800-osn-galilei-1.0.0-2015020315502
 http://profile.gigaset.net/firmware/galilei/m800-osn-galilei-1.0.2-20150512144917.hddimg
 http://profile.gigaset.net/firmware/galilei/m800-osn-galilei-1.0.1-20150417135639.updatefs.cpio
 http://profile.gigaset.net/firmware/shark_pro_hs
-http://profile.gigaset.net/firmware/shark_pro_hs/shark__upd.bin?req=header
 http://profile.gigaset.net/firmware/shark_pro_hs/field_trial
-http://profile.gigaset.net/firmware/shark_pro_hs/field_trial/shark__upd.bin?req=header
 http://profile.gigaset.net/firmware/shark_hs
-http://profile.gigaset.net/firmware/shark_hs/shark__upd.bin?req=header
 http://profile.gigaset.net/firmware/shark_hs/field_trial
-http://profile.gigaset.net/firmware/shark_hs/field_trial/shark__upd.bin?req=header
 http://profile.gigaset.net/firmware/lion2_hs
-http://profile.gigaset.net/firmware/lion2_hs/lion__upd_initial.bin?req=header
-http://profile.gigaset.net/firmware/lion2_hs/lion__upd.bin?req=header
 http://profile.gigaset.net/firmware/sl930_dev
 http://profile.gigaset.net/firmware/sl930_dev/lion_s
 http://profile.gigaset.net/firmware/sl930_dev/lion_s/germany-retail
@@ -9242,16 +9232,11 @@ http://profile.gigaset.net/firmware/sl930_dev/lion_s/cts-retail/lion_s.ota.zip
 http://profile.gigaset.net/firmware/sl930_dev/lion_s/im1-retail
 http://profile.gigaset.net/firmware/sl930_dev/lion_s/lion_s.ota.zip
 http://profile.gigaset.net/firmware/kilby_pro_hs
-http://profile.gigaset.net/firmware/kilby_pro_hs/kilby__upd.bin?req=header
 http://profile.gigaset.net/firmware/kilby_pro_hs/field_trial
-http://profile.gigaset.net/firmware/kilby_pro_hs/field_trial/kilby__upd.bin?req=header
 http://profile.gigaset.net/firmware/borneo_hs
-http://profile.gigaset.net/firmware/borneo_hs/borneo__upd.bin?req=header
 http://profile.gigaset.net/firmware/diamond_hs
-http://profile.gigaset.net/firmware/diamond_hs/diamond__upd.bin?req=header
 http://profile.gigaset.net/firmware/diamond_hs/field_trial
-http://profile.gigaset.net/firmware/diamond_hs/field_trial/diamond_2__upd.bin?req=header
-http://profile.gigaset.net/firmware/diamond_hs/diamond_2__upd.bin?req=header
+http://profile.gigaset.net/firmware/diamond_hs/field_trial/diamond_2__upd.bin
 http://profile.gigaset.net/firmware/1
 http://profile.gigaset.net/firmware/1/0
 http://profile.gigaset.net/pfrscl
@@ -9394,11 +9379,11 @@ http://profile.gigaset.net/chagall/temp/Maxwell
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_1.2.6_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_1.2.5_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/extended.xml
-http://profile.gigaset.net/chagall/temp/Maxwell/BSP-Freescale-Android 5.0
-http://profile.gigaset.net/chagall/temp/Maxwell/BSP-Freescale-Android 5.0/android_L5.0.0_1.0.0-Beta_docs.tar.gz.gz
-http://profile.gigaset.net/chagall/temp/Maxwell/BSP-Freescale-Android 5.0/android_L5.0.0_1.0.0-beta_core_source.tar.gz.gz
-http://profile.gigaset.net/chagall/temp/Maxwell/OSS_License Source Code
-http://profile.gigaset.net/chagall/temp/Maxwell/OSS_License Source Code/sourceLicense.7z
+http://profile.gigaset.net5.0
+http://profile.gigaset.net5.0/android_L5.0.0_1.0.0-Beta_docs.tar.gz.gz
+http://profile.gigaset.net5.0/android_L5.0.0_1.0.0-beta_core_source.tar.gz.gz
+http://profile.gigaset.netCode
+http://profile.gigaset.netCode/sourceLicense.7z
 http://profile.gigaset.net/chagall/temp/Maxwell/maxwell_mac_template_hjl.xml
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_1.2.4_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/CEBIT
@@ -9581,11 +9566,6 @@ http://profile.gigaset.net/chagall/42/webuil/45
 http://profile.gigaset.net/chagall/42/webuil/209
 http://profile.gigaset.net/chagall/42/webuil/209/wl_07.bin
 http://profile.gigaset.net/chagall/42/5
-http://profile.gigaset.net/chagall/42/5/l_2404121346.bin
-http://profile.gigaset.net/chagall/42/5/c_2404121346_eng.bin
-http://profile.gigaset.net/chagall/42/5/pes_2404121346_spa.bin
-http://profile.gigaset.net/chagall/42/5/c_2404121346_spa.bin
-http://profile.gigaset.net/chagall/42/5/pes_2404121346_eng.bin
 http://profile.gigaset.net/chagall/42/sht
 http://profile.gigaset.net/chagall/42/sht/199
 http://profile.gigaset.net/chagall/42/sht/51
@@ -9908,7 +9888,6 @@ http://profile.gigaset.net/chagall/42/3/puk_2505151328_ita.bin
 http://profile.gigaset.net/chagall/42/3/pes_2505151328_spa.bin
 http://profile.gigaset.net/chagall/42/3/par_2505151328_eng.bin
 http://profile.gigaset.net/chagall/gold_hs
-http://profile.gigaset.net/chagall/gold_hs/gold__upd.bin?req=header
 http://profile.gigaset.net/chagall/80
 http://profile.gigaset.net/chagall/80/2
 http://profile.gigaset.net/chagall/80/2/80_1_1.2.1_maxwell_10-user_firmware_enc.zip
@@ -9917,7 +9896,6 @@ http://profile.gigaset.net/chagall/80/2/80_1_1.2.0_maxwell_10-user_firmware_enc.
 http://profile.gigaset.net/chagall/80/1
 http://profile.gigaset.net/chagall/80/1/80_1_1.2.1_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/h1_hs
-http://profile.gigaset.net/chagall/h1_hs/h1__upd.bin?req=header
 http://profile.gigaset.net/chagall/provider
 http://profile.gigaset.net/chagall/provider/911
 http://profile.gigaset.net/chagall/provider/911/42
@@ -10665,11 +10643,8 @@ http://profile.gigaset.net/chagall/diamond_hs/_diamond__upd.bin.extracted/_DERIV
 http://profile.gigaset.net/chagall/diamond_hs/_diamond__upd.bin.extracted/_DERIVAT_3_HS_NSC14450__UPD.BIN.extracted/3644C8.zlib
 http://profile.gigaset.net/chagall/diamond_hs/_diamond__upd.bin.extracted/_DERIVAT_3_HS_NSC14450__UPD.BIN.extracted/65040B.zlib
 http://profile.gigaset.net/chagall/diamond_hs/_diamond__upd.bin.extracted/_DERIVAT_3_HS_NSC14450__UPD.BIN.extracted/169C72.xml
-http://profile.gigaset.net/chagall/diamond_hs/diamond__upd.bin?req=header
-http://profile.gigaset.net/chagall/diamond_hs/_diamond__upd.bin?req=header.extracted
-http://profile.gigaset.net/chagall/diamond_hs/_diamond__upd.bin?req=header.extracted/DERIVAT_3_HS_NSC14450__UPD.BIN
+http://profile.gigaset.net/chagall/diamond_hs/_diamond__upd.bin
 http://profile.gigaset.net/chagall/diamond_hs/field_trial
-http://profile.gigaset.net/chagall/diamond_hs/field_trial/diamond__upd.bin?req=header
 http://profile.gigaset.net/chagall/latest/sifs
 http://profile.gigaset.net/chagall/latest/sifs/sih_3xx.bin
 http://profile.gigaset.net/chagall/latest/41
@@ -10922,5 +10897,5 @@ http://profile.gigaset.net/chagall/61/1/d_sipkom_ww.bin
 http://profile.gigaset.net/master.bin
 http://profile.gigaset.net/MaxwellDevelopment/Trainings
 http://profile.gigaset.net/MaxwellDevelopment/Trainings/Translations
-http://profile.gigaset.net/MaxwellDevelopment/Trainings/Gigaset pro Maxwell 10 training - short V0.2.pptx
+http://profile.gigaset.netV0.2.pptx
 http://profile.gigaset.net/saturn172_41.img
