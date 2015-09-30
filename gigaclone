@@ -13,4 +13,4 @@ If no output dir is specified, . is the default.
 echo "Downloading url list..."
 wget https://github.com/danog/gigaclone/raw/master/urllist -O $dir/urllist
 echo "Downloading everything."
-wget -i $dir/urllist -x -N
+wget -i $dir/urllist -x -N -c
