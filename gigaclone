@@ -4,30 +4,13 @@ set -e
 This website contains all of the provisioning data and the firmwares for Siemens Gigaset devices.
 Usage: $(basename $0) output_dir
 
+
 If no output dir is specified, . is the default.
 "
 
 [ "$1" = "" ] && dir="$PWD" || dir="$1"
 [ -d $dir ] || mkdir $dir
-wget https://github.com/danog/gigaclone/raw/master/urllist -P $dir
-tmp="$dir/tmp"
-mkdir $tmp
-cd $tmp
-wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
-cd log
-for f in ./*;do {
-echo "Working... for $f"
-sed -i '/.*404.*/d;/.*403.*/d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g' $f
-echo "Remove duplicates for $f"
-awk '!seen[$0]++' $f>>$tmp/tmp
-};done
-
-cd $dir
-echo "Remove all duplicates"
-awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
-mv $tmp/final $dir/urllist
-echo "Clean up."
-rm -r $tmp
-
-echo "Download everything."
+echo "Downloading url list..."
+wget https://github.com/danog/gigaclone/raw/master/urllist -O $dir/urllist
+echo "Downloading everything."
 wget -i $dir/urllist -x -N
