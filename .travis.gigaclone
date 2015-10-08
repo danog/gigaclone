@@ -12,14 +12,14 @@ wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
 cd log
 for f in ./*;do {
 echo "Working... for $f"
-sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\%.*//g;s/\.net\/device/\.net\/chagall/g;s/^\.$//g' $f
+sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g;s/^\.$//g' $f
 echo "Remove duplicates for $f"
 awk '!seen[$0]++' $f>>$tmp/tmp
 };done
 echo "Remove all duplicates"
 awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
 echo "Remove useless stuff..."
-sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\%.*//g;s/\.net\/device/\.net\/chagall/g;s/^\.$//g' $tmp/final
+sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g;s/^\.$//g' $tmp/final
 echo "Remove all duplicates"
 awk '!seen[$0]++' $tmp/final >$tmp/finall
 
