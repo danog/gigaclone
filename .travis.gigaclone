@@ -20,10 +20,12 @@ awk '!seen[$0]++' $f>>$tmp/tmp
 echo "Remove all duplicates"
 awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
 
+echo wh
+
 for f in $(grep "\.bin" $tmp/final);do {
-echo -n "Working... for $f " >&2
+echo -n "e" >&2
 file=$(wget -qO- $f | strings)
-echo -n "Working... for $f " >&2
+echo -n "e" >&2
 echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'
 
 baseurl="$(echo "$f" | sed 's/[^/]*$//')"
@@ -35,16 +37,18 @@ for e in $url;do echo "$baseurl$e";done
 }; done >> $tmp/final
 awk '!seen[$0]++' $tmp/final > $tmp/finall
 mv $tmp/finall $tmp/final
+echo "Turn down for wh"
 
 for dl in $(cat $tmp/final); do {
-echo -n "Working... for $f " >&2
+echo -n "a" >&2
 curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
 };done | grep -v "HTTP" | awk '!seen[$0]++' >$tmp/finall
 mv $tmp/finall $tmp/final
 
 mkdir $tmp/test
 cd $tmp/test
-for f in $(sed 's/http:\/\/profile.gigaset.net\///g' $tmp/final);do mkdir -p $f; echo -n "winx ";done
+for f in $(sed 's/http:\/\/profile.gigaset.net\///g' $tmp/final);do mkdir -p $f; echo -n "a";done
+echo t
 
 tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $tmp/tree.html
 
