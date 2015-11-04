@@ -45,25 +45,25 @@ for dl in $(cat $tmp/final); do {
 echo -n "a" >&2
 curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
 };done | grep -v "HTTP" | awk '!seen[$0]++' >$tmp/finall
-mv $tmp/finall $tmp/final
-
+mv $tmp/finall $dir/urllist
+}
 mkdir $tmp/test
 cd $tmp/test
-for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $tmp/final);do mkdir -p $f; echo -n "a";done
+for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do mkdir -p $f; echo -n "a";done
 echo t
 
 tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $tmp/tree.html
 
-mv $tmp/final $tmp/urllist
+
 git clone https://${GH_TOKEN}@github.com/danog/gigaclone.git $tmp/git
 cd $tmp/git
 
-cp $tmp/urllist .
+cp $dir/urllist .
 md5sum $tmp/logs.tgz >.md5sum
 git add -A
 git commit -m "Updated url list"
 git push origin master &>/dev/null
-}
+
 cd $tmp/git
 git checkout gh-pages
 cp $tmp/tree.html .
@@ -74,4 +74,3 @@ git push origin gh-pages &>/dev/null
 cd $dir
 echo "Clean up."
 rm -fr $tmp
-
