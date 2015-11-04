@@ -27,7 +27,6 @@ echo wh
 for f in $(grep "\.bin" $tmp/final);do {
 echo -n "e" >&2
 file=$(wget -qO- $f | strings)
-echo -n "e" >&2
 echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'
 
 baseurl="$(echo "$f" | sed 's/[^/]*$//')"
@@ -43,6 +42,7 @@ echo "Turn down for wh"
 
 for dl in $(cat $tmp/final); do {
 echo -n "a" >&2
+wget -q "$dl" || continue
 curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
 };done | grep -v "HTTP" | awk '!seen[$0]++' >$tmp/finall
 mv $tmp/finall $dir/urllist
