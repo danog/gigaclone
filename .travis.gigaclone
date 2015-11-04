@@ -9,7 +9,7 @@ tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
 wget http://profile.gigaset.net/logs.tgz 
-[ "$(md5sum logs.tgz)" != "$(cat .md5sum)" ] && {
+[ "$(md5sum logs.tgz)" != "$(cat $dir/.md5sum)" ] && {
 tar -xzf logs.tgz
 cd log
 
