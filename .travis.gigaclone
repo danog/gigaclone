@@ -10,6 +10,7 @@ mkdir $tmp
 cd $tmp
 wget http://profile.gigaset.net/logs.tgz && tar -xzf logs.tgz
 cd log
+
 for f in ./*;do {
 echo "Working... for $f"
 sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g;s/^\.$//g' $f
@@ -19,7 +20,7 @@ awk '!seen[$0]++' $f>>$tmp/tmp
 echo "Remove all duplicates"
 awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
 
-for f in $(grep "\.bin" final);do {
+for f in $(grep "\.bin" $tmp/final);do {
 echo -n "Working... for $f " >&2
 file=$(wget -qO- $f | strings)
 echo -n "Working... for $f " >&2
@@ -31,33 +32,33 @@ url=$(echo "$file" | sed '/http/d;/\.bin/!d')
 
 for e in $url;do echo "$baseurl$e";done
 
-}; done >> $dir/final
-awk '!seen[$0]++' $dir/final > $dir/finall
-mv $dir/finall $dir/final
-for dl in $(cat $dir/final); do {
+}; done >> $tmp/final
+awk '!seen[$0]++' $tmp/final > $tmp/finall
+mv $tmp/finall $tmp/final
+
+for dl in $(cat $tmp/final); do {
 echo -n "Working... for $f " >&2
 curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
-};done  | grep -v "HTTP" | awk '!seen[$0]++' >>$dir/final
-awk '!seen[$0]++' $dir/final > $dir/finall
-mv $dir/finall $dir/final
+};done | grep -v "HTTP" | awk '!seen[$0]++' >$tmp/finall
+mv $tmp/finall $tmp/final
 
-mkdir test
-cd test
-for f in $(sed 's/http:\/\/profile.gigaset.net\///g' $dir/final);do mkdir -p $f; echo -n "winx ";done
+mkdir $tmp/test
+cd $tmp/test
+for f in $(sed 's/http:\/\/profile.gigaset.net\///g' $tmp/final);do mkdir -p $f; echo -n "winx ";done
 
-tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $dir/tree.html
+tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $tmp/tree.html
 
-mv $dir/final $dir/urllist
+mv $tmp/final $tmp/urllist
 git clone https://${GH_TOKEN}@github.com/danog/gigaclone.git $tmp/git
 cd $tmp/git
-cp $dir/urllist .
-git add -A
 
+cp $tmp/urllist .
+git add -A
 git commit -m "Updated url list"
 git push origin master &>/dev/null
 
 git checkout gh-pages
-cp $dir/tree.html .
+cp $tmp/tree.html .
 git commit -m "Updated dir tree"
 git push origin gh-pages &>/dev/null
 
