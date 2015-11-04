@@ -58,6 +58,7 @@ git clone https://${GH_TOKEN}@github.com/danog/gigaclone.git $tmp/git
 cd $tmp/git
 
 cp $tmp/urllist .
+md5sum $tmp/logs.tgz >.md5sum
 git add -A
 git commit -m "Updated url list"
 git push origin master &>/dev/null
