@@ -9,7 +9,8 @@ tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
 wget http://profile.gigaset.net/logs.tgz 
-[ "$(md5sum logs.tgz)" != "$(cat .md5sum)" ] && tar -xzf logs.tgz || exit 0
+[ "$(md5sum logs.tgz)" != "$(cat .md5sum)" ] && {
+tar -xzf logs.tgz
 cd log
 
 for f in ./*;do {
@@ -62,7 +63,8 @@ md5sum $tmp/logs.tgz >.md5sum
 git add -A
 git commit -m "Updated url list"
 git push origin master &>/dev/null
-
+}
+cd $tmp/git
 git checkout gh-pages
 cp $tmp/tree.html .
 got add -A
