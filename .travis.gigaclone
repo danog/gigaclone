@@ -48,7 +48,7 @@ mv $tmp/finall $tmp/final
 
 mkdir $tmp/test
 cd $tmp/test
-for f in $(sed 's/http:\/\/profile.gigaset.net\///g' $tmp/final);do mkdir -p $f; echo -n "a";done
+for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $tmp/final);do mkdir -p $f; echo -n "a";done
 echo t
 
 tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $tmp/tree.html
