@@ -33,12 +33,14 @@ for e in $url;do echo "$baseurl$e";done
 
 }; done >> $dir/final
 awk '!seen[$0]++' $dir/final > $dir/finall
-
+mv $dir/finall $dir/final
 for dl in $(cat $dir/final); do {
 echo -n "Working... for $f " >&2
 curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
-}
-;done  | grep -v "HTTP" | awk '!seen[$0]++' >>$dir/final
+};done  | grep -v "HTTP" | awk '!seen[$0]++' >>$dir/final
+awk '!seen[$0]++' $dir/final > $dir/finall
+mv $dir/finall $dir/final
+
 mkdir test
 cd test
 for f in $(sed 's/http:\/\/profile.gigaset.net\///g' $dir/final);do mkdir -p $f; echo -n "winx ";done
