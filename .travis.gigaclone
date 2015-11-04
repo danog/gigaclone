@@ -67,7 +67,7 @@ git push origin master &>/dev/null
 cd $tmp/git
 git checkout gh-pages
 cp $tmp/tree.html .
-got add -A
+git add -A
 git commit -m "Updated dir tree"
 git push origin gh-pages &>/dev/null
 
