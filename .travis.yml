@@ -8,6 +8,7 @@ addons:
     - sed
     - gawk
     - fdupes
+    - tree
 
 script: "bash ./.travis.gigaclone"
 
