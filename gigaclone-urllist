@@ -52,7 +52,7 @@ checkurl() {
 echo -n "Turn down for wh"
 for dl in $(cat $dir/urllist); do {
 echo -n "a" >&2
-wget -q "$dl" || continue
+wget -S --spider "$dl" 2>&1 | grep -q "200 OK" || continue
 curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
 };done | grep -v "HTTP" | awk '!seen[$0]++' >$dir/check
 mv $dir/check $dir/urllist
