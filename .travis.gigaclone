@@ -8,6 +8,7 @@ git config --global push.default simple
 tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
+
 rdupes() {
 echo "Remove all duplicates"
 awk '!seen[$0]++' $* $dir/urllist >$dir/final
@@ -18,8 +19,8 @@ rm -rf $tmp
 mkdir $tmp
 cd $tmp
 }
+
 extractlog() {
-  
 tar -xzf logs.tgz
 cd log
 
@@ -29,6 +30,7 @@ sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.n
 echo "Remove duplicates for $f"
 awk '!seen[$0]++' $f>>$tmp/tmp
 };done
+rdupes $tmp/tmp
 }
 
 extractbin() {
@@ -46,6 +48,7 @@ url=$(echo "$file" | sed '/http/d;/\.bin/!d')
 for e in $url;do echo "$baseurl$e";done
 
 }; done >> $tmp/tmp
+rdupes $tmp/tmp
 }
 
 checkurl() {
