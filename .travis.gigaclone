@@ -8,8 +8,18 @@ git config --global push.default simple
 tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
-wget http://profile.gigaset.net/logs.tgz 
-[ "$(md5sum $tmp/logs.tgz)" != "$(cat $dir/.md5sum)" ] && {
+rdupes() {
+echo "Remove all duplicates"
+awk '!seen[$0]++' $* $dir/urllist >$dir/final
+mv $dir/final $dir/urllist
+rm $*
+cd $dir
+rm -rf $tmp
+mkdir $tmp
+cd $tmp
+}
+extractlog() {
+  
 tar -xzf logs.tgz
 cd log
 
@@ -19,14 +29,14 @@ sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.n
 echo "Remove duplicates for $f"
 awk '!seen[$0]++' $f>>$tmp/tmp
 };done
-echo "Remove all duplicates"
-awk '!seen[$0]++' $tmp/tmp $dir/urllist >$tmp/final
+}
 
-echo wh
-
-for f in $(grep "\.bin" $tmp/final);do {
+extractbin() {
+cd $tmp
+echo -n wh
+for f in $(grep "\.bin" $dir/urllist);do {
 echo -n "e" >&2
-file=$(wget -qO- $f | strings)
+file=$(wget -qO- "$f" | strings)
 echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'
 
 baseurl="$(echo "$f" | sed 's/[^/]*$//')"
@@ -35,38 +45,55 @@ url=$(echo "$file" | sed '/http/d;/\.bin/!d')
 
 for e in $url;do echo "$baseurl$e";done
 
-}; done >> $tmp/final
-awk '!seen[$0]++' $tmp/final > $tmp/finall
-mv $tmp/finall $tmp/final
-echo "Turn down for wh"
+}; done >> $tmp/tmp
+}
 
-for dl in $(cat $tmp/final); do {
+checkurl() {
+echo -n "Turn down for wh"
+for dl in $(cat $dir/urllist); do {
 echo -n "a" >&2
 wget -q "$dl" || continue
 curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
-};done | grep -v "HTTP" | awk '!seen[$0]++' >$tmp/finall
-mv $tmp/finall $dir/urllist
+};done | grep -v "HTTP" | awk '!seen[$0]++' >$dir/check
+mv $dir/check $dir/urllist
+rm .check
 }
-mkdir $tmp/test
+
+tree() {
+mkdir -p $tmp/test
 cd $tmp/test
-for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do mkdir -p $f; echo -n "a";done
-echo t
+for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do {
+mkdir -p $f
+echo -n "a"
+};done
+tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $dir/tree.html
 
-tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $tmp/tree.html
+}
 
+wget http://profile.gigaset.net/logs.tgz 
+[ "$(md5sum $tmp/logs.tgz)" != "$(cat $dir/.md5sum)" ] && {
+extractlog
+extractbin
+md5sum $tmp/logs.tgz >$dir/.md5sum
+rdupes $tmp/tmp
+} || rm $dir/logs.tgz
+cd $dir
+[ -f .check ] && checkurl || touch .check
+tree
+cd $dir
+rm -rf $tmp/
+mkdir $tmp
 
 git clone https://${GH_TOKEN}@github.com/danog/gigaclone.git $tmp/git
 cd $tmp/git
 
-cp $dir/urllist .
-md5sum $tmp/logs.tgz >.md5sum
+cp $dir/* .
 git add -A
 git commit -m "Updated url list"
 git push origin master &>/dev/null
 
-cd $tmp/git
 git checkout gh-pages
-cp $tmp/tree.html .
+cp $dir/tree.html .
 git add -A
 git commit -m "Updated dir tree"
 git push origin gh-pages &>/dev/null
