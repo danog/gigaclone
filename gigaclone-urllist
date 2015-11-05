@@ -2,9 +2,6 @@
 
 dir="$PWD"
 
-git config --global user.name "${GIT_NAME}"
-git config --global user.email "${GIT_EMAIL}"
-git config --global push.default simple
 tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
@@ -79,15 +76,16 @@ extractlog
 extractbin
 md5sum $tmp/logs.tgz >$dir/.md5sum
 rdupes $tmp/tmp
-} || rm $dir/logs.tgz
 cd $dir
-[ -f .check ] && checkurl || touch .check
+checkurl
 tree
+} || rm $dir/logs.tgz
+
 cd $dir
 rm -rf $tmp/
 mkdir $tmp
 
-git clone https://${GH_TOKEN}@github.com/danog/gigaclone.git $tmp/git
+git clone git@github.com:/danog/gigaclone.git $tmp/git
 cd $tmp/git
 
 cp $dir/* .
