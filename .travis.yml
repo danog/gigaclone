@@ -1,0 +1,10 @@
+language: bash
+
+addons:
+  apt:
+    packages:
+    - tree
+    - grep
+    - sed
+
+script: ". ./.gigaclone-urllist"
