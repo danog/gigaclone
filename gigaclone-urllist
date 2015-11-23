@@ -5,13 +5,6 @@ tmp="$dir/tmp"
 mkdir $tmp
 cd $tmp
 
-rdupes() {
-echo "Remove all duplicates for $*"
-awk '!seen[$0]++' $* $dir/urllist >$dir/final
-mv $dir/final $dir/urllist
-rm $*
-}
-
 extractlog() {
 tar -xzf logs.tgz
 cd log
@@ -27,27 +20,32 @@ md5sum $tmp/logs.tgz >$dir/.md5sum
 rdupes $tmp/tmp
 }
 
+rdupes() {
+echo "Remove all duplicates for $*"
+awk '!seen[$0]++' $* $dir/urllist >$dir/final
+mv $dir/final $dir/urllist
+rm $*
+}
 
 extractbin() {
 cd $tmp
 for f in $(grep "\.bin" $dir/urllist);do {
 file=$(wget -qO- "$f" | strings)
-echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'
+echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'>>$tmp/tmp
 
 baseurl="$(echo "$f" | sed 's/[^/]*$//')"
 
 url=$(echo "$file" | sed '/http/d;/\.bin/!d')
 
-for e in $url;do echo "$baseurl$e";done
+for e in $url;do echo "$baseurl$e">>$tmp/tmp;done
 
-}; done >> $tmp/tmp
+}; done
 rdupes $tmp/tmp
 }
 
 checkurl() {
 for dl in $(cat $dir/urllist); do {
-wget -S --spider "$dl" 2>&1 | grep -q "200 OK" || continue
-curl -w "%{url_effective}\n" -L -s -I -S "$dl" -o /dev/null
+curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null
 };done | grep -v "HTTP" | awk '!seen[$0]++' >$dir/check
 mv $dir/check $dir/urllist
 }
