@@ -1,5 +1,5 @@
 #!/bin/bash
-rtmp= "$PWD/.."
+
 {
 git config --global user.name "${GIT_NAME}"
 git config --global user.email "${GIT_EMAIL}"
@@ -117,4 +117,4 @@ git push origin gh-pages &>/dev/null
 cd $dir
 echo "Clean up."
 rm -fr $tmp
-}&>$rtmp/out
+}2>&1
