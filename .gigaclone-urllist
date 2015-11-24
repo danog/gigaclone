@@ -1,5 +1,5 @@
 #!/bin/bash
-travis_wait 120 {
+
 git config --global user.name "${GIT_NAME}"
 git config --global user.email "${GIT_EMAIL}"
 git config --global push.default simple
@@ -116,4 +116,5 @@ git push origin gh-pages &>/dev/null
 cd $dir
 echo "Clean up."
 rm -fr $tmp
-}
+
+
