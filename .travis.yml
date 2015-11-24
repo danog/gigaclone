@@ -7,4 +7,4 @@ addons:
     - grep
     - sed
 
-script: "bash ./.gigaclone-urllist 2>&1"
+script: "source ./.gigaclone-urllist 2>&1"
