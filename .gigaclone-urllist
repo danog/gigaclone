@@ -60,7 +60,7 @@ cat $dir/.cur >> $dir/.url2check
 
 
 
-timeout -skill 100m 'for dl in $(cat $dir/.url2check); do {
+travis_wait travis_wait travis_wait travis_wait travis_wait bash -c 'for dl in $(cat $dir/.url2check); do {
 curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null
 echo $dl>$dir/.cur
 [ "$dl" = "$last" ] && rm $dir/.cur $dir/.url2check $dir/.docheck
