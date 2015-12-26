@@ -94,4 +94,4 @@ touch $dir/../.work
   rm -fr $tmp
   rm $dir/../.work
   
-} | { while [ -f $dir/../.work ]; do echo -n test; sleep 30;done; };
+} &>> ${OPENSHIFT_PHP_LOG_DIR}/gigaclone.log
