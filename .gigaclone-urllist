@@ -3,17 +3,15 @@
 git config --global user.name "${GIT_NAME}"
 git config --global user.email "${GIT_EMAIL}"
 git config --global push.default simple
-dir="$PWD"
-
+dir="$(echo "$0" | sed 's/'$(basename $0)'//g')"
 tmp="$dir/tmp"
-mkdir $tmp
+
+mkdir -p $tmp
 cd $tmp
-touch $dir/../.work
 {
   extractlog() {
     tar -xzf logs.tgz
     cd log
-    
     for f in ./*;do {
       echo "Working... for $f"
       sed -i '/200\|206\|302\|301/!d;s/\sHTTP.*//g;s/.*\s/http:\/\/profile\.gigaset\.net/g;/http:\/\/profile\.gigaset\.net\"\"/d;s/?.*//g;s/\.net\/device/\.net\/chagall/g;s/^\.$//g' $f
@@ -62,7 +60,7 @@ touch $dir/../.work
   
   }
   
-  wget http://profile.gigaset.net/logs.tgz 
+  wget http://profile.gigaset.net/logs.tgz -O logs.tgz
   [ "$(md5sum $tmp/logs.tgz)" != "$(cat $dir/.md5sum)" ] && {
     extractlog
     extractbin
@@ -92,6 +90,4 @@ touch $dir/../.work
   cd $dir
   echo "Clean up."
   rm -fr $tmp
-  rm $dir/../.work
-  
 } &>> ${OPENSHIFT_PHP_LOG_DIR}/gigaclone.log
