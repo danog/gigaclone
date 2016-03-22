@@ -1,16 +1,19 @@
 #!/bin/bash
+conf() {
+ git config user.name "Daniil Gentili"
+ git config user.email "daniil.gentili.dg@gmail.com"
+ git config push.default simple
+}
 
-git config --global user.name "${GIT_NAME}"
-git config --global user.email "${GIT_EMAIL}"
-git config --global push.default simple
-dir="$(echo "$0" | sed 's/'$(basename $0)'//g')"
+dir="$PWD"
 tmp="$dir/tmp"
-
+rm -r $tmp
 mkdir -p $tmp
 cd $tmp
 {
   extractlog() {
     tar -xzf logs.tgz
+    rm logs.tgz
     cd log
     for f in ./*;do {
       echo "Working... for $f"
@@ -29,28 +32,33 @@ cd $tmp
     awk '!seen[$0]++' $* $dir/urllist >$dir/final
     mv $dir/final $dir/urllist
     rm $*
+    
+    for dl in $(cat $dir/urllist); do {
+      curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null >> $dir/final
+    };done
+    sed -i '/HTTP/!d' $dir/final
+    mv $dir/final $dir/urllist
+    awk '!seen[$0]++' $dir/urllist >$dir/final
+    mv $dir/final $dir/urllist
   }
   
   extractbin() {
+    echo "Extracting urls..."
     cd $tmp
     for f in $(grep "\.bin" $dir/urllist);do {
-      file=$(wget -qO- "$f" | strings)
-      echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'>>$tmp/tmp
-      baseurl="$(echo "$f" | sed 's/[^/]*$//')"
-      url=$(echo "$file" | sed '/http/d;/\.bin/!d')
-      for e in $url;do echo "$baseurl$e">>$tmp/tmp;done
+      [ $(wget -S --spider "$f" 2>&1 | sed '/Length/!d;s/Length\: //g;s/\s.*//g;s/\s//g' | tr -d "\n") < 52428800 ] && {
+       file=$(wget -qO- "$f" | strings)
+       echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'>>$tmp/tmp
+       baseurl="$(echo "$f" | sed 's/[^/]*$//')"
+       url=$(echo "$file" | sed '/http/d;/\.bin/!d')
+       for e in $url;do echo "$baseurl$e">>$tmp/tmp;done
+      }
     }; done
     rdupes $tmp/tmp
   }
   
-  checkurl() {
-    for dl in $(cat $*); do {
-      curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null
-    };done | grep -v "HTTP" | awk '!seen[$0]++' >>$dir/check
-    mv $dir/check $dir/urllist
-  }
-  
   tree() {
+    echo "Creating tree..."
     mkdir -p $tmp/test
     cd $tmp/test
     for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do {
@@ -60,12 +68,10 @@ cd $tmp
   
   }
   
-  wget http://profile.gigaset.net/logs.tgz -O logs.tgz
+  wget http://profile.gigaset.net/logs.tgz -qO logs.tgz
   [ "$(md5sum $tmp/logs.tgz)" != "$(cat $dir/.md5sum)" ] && {
     extractlog
     extractbin
-    cd $dir
-    checkurl $dir/urllist
   }
   tree
   cd $dir
@@ -74,7 +80,7 @@ cd $tmp
   
   git clone https://$GH_TOKEN@github.com/danog/gigaclone.git $tmp/git 
   cd $tmp/git
-  
+  config 
   cp $dir/* .
   rm -rf tmp
   git add -A
@@ -89,5 +95,5 @@ cd $tmp
   
   cd $dir
   echo "Clean up."
-  rm -fr $tmp
-} &>> ${OPENSHIFT_PHP_LOG_DIR}/gigaclone.log
+  rm -rf $tmp
+} &>> $dir/gigaclone.log
