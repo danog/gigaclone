@@ -29,13 +29,15 @@ cd $tmp
   rdupes() {
     echo "Remove all duplicates for $*"
     awk '!seen[$0]++' $* $dir/urllist >$dir/final
+    sed -i 's/\&hellip\///g' $dir/final
+
     mv $dir/final $dir/urllist
     rm $*
     
     for dl in $(cat $dir/urllist); do {
       curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null >> $dir/final
     };done
-    sed -i '/HTTP/d' $dir/final
+    sed -i '/HTTP/d;s/\&hellip\///g' $dir/final
     mv $dir/final $dir/urllist
     awk '!seen[$0]++' $dir/urllist >$dir/final
     mv $dir/final $dir/urllist
@@ -62,7 +64,8 @@ cd $tmp
     mkdir -p $tmp/test
     cd $tmp/test
     for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do {
-      mkdir -p $f
+      mkdir $(dirname "$f")&>/dev/null
+      touch "$f"
     };done
     tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $dir/tree.html
   
@@ -72,6 +75,8 @@ cd $tmp
   [ "$(md5sum $tmp/logs.tgz)" != "$(cat $dir/.md5sum)" ] && {
     extractlog
     extractbin
+    sort urllist > final
+    mv final urllist
   }
   
   treegen
