@@ -89,14 +89,15 @@ cd $tmp
   git clone https://$GH_TOKEN@github.com/danog/gigaclone.git $tmp/git 
   cd $tmp/git
   config 
-  cp $dir/* .
+  cp -a $dir/* .
   rm -rf tmp gigaclone.log
   git add -A
   git commit -m "Updated url list"
   git push origin master &>/dev/null
   
   git checkout gh-pages
-  cp $dir/tree.html .
+  rm -r tree
+  cp -a $dir/tree .
   git add -A
   git commit -m "Updated dir tree"
   git push origin gh-pages &>/dev/null

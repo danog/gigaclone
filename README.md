@@ -8,4 +8,4 @@ Usage: ```gigaclone output_dir```
 If no output dir is specified, . is the default.
 
 [Download the script](https://github.com/danog/gigaclone/raw/master/gigaclone) or  
-Or [view](https://daniil.it/gigaclone/tree.html) the dir listing of the website.
+Or [view](https://daniil.it/gigaclone/tree) the dir listing of the website.
