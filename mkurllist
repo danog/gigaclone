@@ -62,7 +62,7 @@ cd $tmp
     mkdir -p $tmp/test
     cd $tmp/test
     for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do {
-      mkdir $f
+      mkdir -p $f
     };done
     tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $dir/tree.html
   
