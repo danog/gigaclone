@@ -21,8 +21,8 @@ cd $tmp
       awk '!seen[$0]++' $f>>$tmp/tmp
     };done
 
-    cd $tmp
     md5sum $tmp/logs.tgz >$dir/.md5sum
+    rm $tmp/logs.tgz
     rdupes $tmp/tmp
   }
   
@@ -62,7 +62,7 @@ cd $tmp
     mkdir -p $tmp/test
     cd $tmp/test
     for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do {
-      mkdir -p $f
+      mkdir $f
     };done
     tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $dir/tree.html
   
