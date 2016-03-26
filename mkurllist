@@ -13,7 +13,6 @@ cd $tmp
 {
   extractlog() {
     tar -xzf logs.tgz
-    rm logs.tgz
     cd log
     for f in ./*;do {
       echo "Working... for $f"
@@ -36,7 +35,7 @@ cd $tmp
     for dl in $(cat $dir/urllist); do {
       curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null >> $dir/final
     };done
-    sed -i '/HTTP/!d' $dir/final
+    sed -i '/HTTP/d' $dir/final
     mv $dir/final $dir/urllist
     awk '!seen[$0]++' $dir/urllist >$dir/final
     mv $dir/final $dir/urllist
@@ -46,7 +45,7 @@ cd $tmp
     echo "Extracting urls..."
     cd $tmp
     for f in $(grep "\.bin" $dir/urllist);do {
-      [ $(wget -S --spider "$f" 2>&1 | sed '/Length/!d;s/Length\: //g;s/\s.*//g;s/\s//g' | tr -d "\n") < 52428800 ] && {
+      [ $(wget -S --spider "$f" 2>&1 | sed '/Length/!d;s/Length\: //g;s/\s.*//g;s/\s//g;s/[^0-9]*//g' | tr -d "\n") -lt 52428800 ] && {
        file=$(wget -qO- "$f" | strings)
        echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'>>$tmp/tmp
        baseurl="$(echo "$f" | sed 's/[^/]*$//')"
@@ -57,7 +56,8 @@ cd $tmp
     rdupes $tmp/tmp
   }
   
-  tree() {
+  
+  treegen() {
     echo "Creating tree..."
     mkdir -p $tmp/test
     cd $tmp/test
@@ -73,7 +73,9 @@ cd $tmp
     extractlog
     extractbin
   }
-  tree
+  
+  treegen
+  
   cd $dir
   rm -rf $tmp/
   mkdir $tmp
@@ -82,7 +84,7 @@ cd $tmp
   cd $tmp/git
   config 
   cp $dir/* .
-  rm -rf tmp
+  rm -rf tmp gigaclone.log
   git add -A
   git commit -m "Updated url list"
   git push origin master &>/dev/null
@@ -96,4 +98,4 @@ cd $tmp
   cd $dir
   echo "Clean up."
   rm -rf $tmp
-} &>> $dir/gigaclone.log
+} &> $dir/gigaclone.log
