@@ -79,7 +79,7 @@ cd $tmp
     sort urllist > final
     mv final urllist
   }
-  checkurl
+  rdupes $dir/urllist
   treegen
   
   cd $dir
