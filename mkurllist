@@ -61,14 +61,15 @@ cd $tmp
   
   treegen() {
     echo "Creating tree..."
-    mkdir -p $tmp/test
-    cd $tmp/test
+    rm -r tree
+    mkdir tree
+    cd tree
     for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do {
       mkdir $(dirname "$f")&>/dev/null
       touch "$f"
     };done
-    tree -T "profile.gigaset.net" -C -H http://profile.gigaset.net -o $dir/tree.html
-  
+    for f in $(find . -type d);do a=$(echo "$f" | sed 's/\.\///g'); cd $f; index="(tree -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g')"; echo "$index">index.html; cd $OLDPWD; done    
+    find . -not -iname "index.html" -type f -a -not -name "." -exec rm {} \;
   }
   
   wget http://profile.gigaset.net/logs.tgz -qO logs.tgz
@@ -78,7 +79,7 @@ cd $tmp
     sort urllist > final
     mv final urllist
   }
-  
+  checkurl
   treegen
   
   cd $dir
