@@ -27,13 +27,14 @@ cd $tmp
   }
   
   rdupes() {
-    echo "Remove all duplicates for $*"
-    awk '!seen[$0]++' $* $dir/urllist >$dir/final
-    sed -i 's/\&hellip\///g' $dir/final
+    [ "$1" != "" ] && {
+      echo "Remove all duplicates for $*"
+      awk '!seen[$0]++' $* $dir/urllist >$dir/final
+      sed -i 's/\&hellip\///g' $dir/final
 
-    mv $dir/final $dir/urllist
-    rm $*
-    
+      mv $dir/final $dir/urllist
+      rm $*
+    }
     for dl in $(cat $dir/urllist); do {
       curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null >> $dir/final
     };done
@@ -68,7 +69,7 @@ cd $tmp
       mkdir $(dirname "$f")&>/dev/null
       touch "$f"
     };done
-    for f in $(find . -type d);do a=$(echo "$f" | sed 's/\.\///g'); cd $f; index="(tree -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g')"; echo "$index">index.html; cd $OLDPWD; done    
+    for f in $(find . -type d);do a=$(echo "$f" | sed 's/\.\///g'); cd $f; index="$(tree -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g')"; echo "$index">index.html; cd $OLDPWD; done    
     find . -not -iname "index.html" -type f -a -not -name "." -exec rm {} \;
   }
   
