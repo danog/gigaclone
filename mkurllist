@@ -1,9 +1,4 @@
 #!/bin/bash
-conf() {
- git config user.name "Daniil Gentili"
- git config user.email "daniil.gentili.dg@gmail.com"
- git config push.default simple
-}
 
 dir="$PWD"
 tmp="$dir/tmp"
@@ -80,7 +75,7 @@ cd $tmp
     sort urllist > final
     mv final urllist
   }
-  rdupes $dir/urllist
+  rdupes
   treegen
   
   cd $dir
@@ -89,7 +84,7 @@ cd $tmp
   
   git clone https://$GH_TOKEN@github.com/danog/gigaclone.git $tmp/git 
   cd $tmp/git
-  config 
+  
   cp -a $dir/* .
   rm -rf tmp gigaclone.log
   git add -A
