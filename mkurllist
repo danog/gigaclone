@@ -46,7 +46,7 @@ cd $tmp
       [ $(wget -S --spider "$f" 2>&1 | sed '/Length/!d;s/Length\: //g;s/\s.*//g;s/\s//g;s/[^0-9]*//g' | tr -d "\n") -lt 52428800 ] && {
        file=$(wget -qO- "$f" | strings)
        echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'>>$tmp/tmp
-       baseurl="$(echo "$f" | sed 's/[^/]*$//')"
+       baseurl="$(dirname "$f")"
        url=$(echo "$file" | sed '/http/d;/\.bin/!d')
        for e in $url;do echo "$baseurl$e">>$tmp/tmp;done
       }
@@ -86,7 +86,7 @@ cd $tmp
   
   git clone https://$GH_TOKEN@github.com/danog/gigaclone.git $tmp/git 
   cd $tmp/git
-  
+  rm -r tree 
   cp -a $dir/* .
   rm -rf tmp gigaclone.log
   git add -A
