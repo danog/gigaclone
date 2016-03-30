@@ -75,7 +75,7 @@ cd $tmp
     sort urllist > final
     mv final urllist
   }
-  rdupes
+  
   treegen
   
   cd $dir
