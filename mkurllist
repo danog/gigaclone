@@ -57,6 +57,7 @@ cd $tmp
   
   treegen() {
     echo "Creating tree..."
+    cd $dir
     rm -r tree
     mkdir tree
     cd tree
@@ -72,10 +73,10 @@ cd $tmp
   [ "$(md5sum $tmp/logs.tgz)" != "$(cat $dir/.md5sum)" ] && {
     extractlog
     extractbin
-    sort urllist > final
-    mv final urllist
   }
-  
+  cd $dir
+  sort urllist > final
+  mv final urllist
   treegen
   
   cd $dir
