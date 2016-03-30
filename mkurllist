@@ -74,6 +74,7 @@ cd $tmp
     extractlog
     extractbin
   }
+  [ "$1" = 'check' ] && rdupes
   cd $dir
   sort urllist > final
   mv final urllist
