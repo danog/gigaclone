@@ -65,7 +65,7 @@ cd $tmp
       mkdir -p $(dirname "$f")&>/dev/null
       touch "$f"
     };done
-    for f in $(find . -type d);do a=$(echo "$f" | sed 's/\.\///g'); cd $f; index="$(tree -a -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/[<]\/a[>] /\<\/a\>\<br\>\
+    for f in $(find . -type d);do a=$(echo "$f" | sed 's/\.\///g'); cd $f; index="$(tree -a -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/[<]\/a[>] /[<]\/a[>][<]br[>] \
 /g')"; echo "$index">index.html; cd $OLDPWD; done
     find . -not -iname "index.html" -type f -a -not -name "." -exec rm {} \;
   }
