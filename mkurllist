@@ -24,12 +24,13 @@ cd $tmp
   rdupes() {
     [ "$1" != "" ] && {
       echo "Remove all duplicates for $*"
-      sed -i 's/\/\//\//g;s/\/$//g' $dir/urllist
       awk '!seen[$0]++' $* $dir/urllist >$dir/final
 
       mv $dir/final $dir/urllist
       rm $*
     }
+    sed -i 's/\/\//\//g;s/\/$//g;s/http:\//http:\/\//g;s/http:\/\/\//http:\/\//g' $dir/urllist
+
     for dl in $(cat $dir/urllist); do {
      a=$(curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null)
      [ $? = "0" ] && echo "$a" >> $dir/final
