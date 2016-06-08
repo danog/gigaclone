@@ -30016,6 +30016,7 @@ http://profile.gigaset.net/chagall/provider/frechen/7C2F808E2BC8.xml
 http://profile.gigaset.net/chagall/provider/kpn/42/1.bin
 http://profile.gigaset.net/chagall/provider/kpn/42/2.bin
 http://profile.gigaset.net/chagall/provider/kpn/42/3.bin
+http://profile.gigaset.net/chagall/provider/provcloud/ProvCloud.mp4
 http://profile.gigaset.net/chagall/provider/T300-T500/iso/5.3.0.7/Celsius_05.03.00.07.iso
 http://profile.gigaset.net/chagall/provider/T300-T500/iso/5.7.0.8/Celsius_05.07.00.08.iso
 http://profile.gigaset.net/chagall/provider/T300-T500/module/Gigaset_Device_Firmware_cgp1948.zip
@@ -30294,9 +30295,11 @@ http://profile.gigaset.net/chagall/temp/Maxwell/80_1_1.2.19_maxwell_10-user_firm
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_1.2.20.1_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_1.2.20_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_1.2.23_maxwell_10-user_firmware_enc.zip
+http://profile.gigaset.net/chagall/temp/Maxwell/80_1_2.0.4.2_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_2.0.7_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_2.0.8.2_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/80_1_2.0.9_maxwell_10-user_firmware_enc.zip
+http://profile.gigaset.net/chagall/temp/Maxwell/80_1_2.1.0_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/ADB_and_PCAP_Videocall%20Maxwel%20to%20Maxwell%20V2.0.8.2-Android%205.1.1%20DULEWGRZ.zip
 http://profile.gigaset.net/chagall/temp/Maxwell/AFM-571/AFM%20571%20LDAP%20No%20or%20incorrect%20search%20results%20displayed%20at%20bintec-elmeg%20Digibox%2002.mp4
 http://profile.gigaset.net/chagall/temp/Maxwell/BSP-Freescale-Android%205.0/android_L5.0.0_1.0.0-beta_core_source.tar.gz.gz
@@ -38755,6 +38758,7 @@ http://profile.gigaset.net/firmware/shark_pro_hs/suota/bl059/shark_suota__upd.bi
 http://profile.gigaset.net/firmware/shark_pro_hs/suota/bl060/shark_suota__upd.bin
 http://profile.gigaset.net/firmware/shark_pro_hs/suota/bl062/shark_suota__upd.bin
 http://profile.gigaset.net/firmware/shark_pro_hs/suota/fake-bl/shark_suota_test__upd.bin
+http://profile.gigaset.net/firmware/shark_swz_hs/shark__upd.bin
 http://profile.gigaset.net/firmware/shark_swz_hs/suota/fake-bl/shark_suota_test__upd.bin
 http://profile.gigaset.net/firmware/sifs/sifsroot.bin
 http://profile.gigaset.net/firmware/sifs/sih_0xx.bin
