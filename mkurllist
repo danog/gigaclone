@@ -24,7 +24,7 @@ cd $tmp
   rdupes() {
     [ "$1" != "" ] && {
       echo "Remove all duplicates for $*"
-      awk '!seen[$0]++' $* $dir/urllist >$dir/final
+      awk -niord '{printf RT?$0chr("0x"substr(RT,2)):$0}' RS=%.. $* $dir/urllist | awk '!seen[$0]++' >$dir/final
 
       mv $dir/final $dir/urllist
       rm $*
