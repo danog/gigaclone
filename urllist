@@ -22920,6 +22920,8 @@ http://profile.gigaset.net/chagall/beta/42/13/pza_1304161126_ita.bin
 http://profile.gigaset.net/chagall/beta/42/13/pza_1304161126_spa.bin
 http://profile.gigaset.net/chagall/beta/42/merkur231_42.bin
 http://profile.gigaset.net/chagall/beta/42/merkur238_42.bin
+http://profile.gigaset.net/chagall/beta/42/sht/238/sht_02.bin
+http://profile.gigaset.net/chagall/beta/42/sht/238/version.bin
 http://profile.gigaset.net/chagall/beta/70/1/baselines.bin
 http://profile.gigaset.net/chagall/beta/70/1/c_2801140923_eng.bin
 http://profile.gigaset.net/chagall/beta/70/1/c_2801140923_fre.bin
@@ -23477,6 +23479,7 @@ http://profile.gigaset.net/chagall/diamond_hs/diamond__upd.bin
 http://profile.gigaset.net/chagall/diamond_hs/field_trial/diamond__upd.bin
 http://profile.gigaset.net/chagall/gold_hs/field_trial/gold__upd.bin
 http://profile.gigaset.net/chagall/gold_hs/gold__upd.bin
+http://profile.gigaset.net/chagall/h1_hs/field_trial/h1__upd.bin
 http://profile.gigaset.net/chagall/h1_hs/h1__upd.bin
 http://profile.gigaset.net/chagall/ift/80/1/80_1_1.2.16_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/chagall/ift/80/1/80_1_1.2.20_maxwell_10-user_firmware_enc.zip
@@ -32899,6 +32902,7 @@ http://profile.gigaset.net/chagall/test/42/sht/228/sht_01.bin
 http://profile.gigaset.net/chagall/test/42/sht/228/sht_02.bin
 http://profile.gigaset.net/chagall/test/42/sht/228/sht_23.bin
 http://profile.gigaset.net/chagall/test/42/sht/228/version.bin
+http://profile.gigaset.net/chagall/test/42/sht/231/sht_02.bin
 http://profile.gigaset.net/chagall/test/42/sht/231/version.bin
 http://profile.gigaset.net/chagall/test/42/webuil/207/version.bin
 http://profile.gigaset.net/chagall/test/42/webuil/228/wl_23.bin
@@ -35219,6 +35223,7 @@ http://profile.gigaset.net/chagall/unstable/42/2/sht/220/version.bin
 http://profile.gigaset.net/chagall/unstable/42/2/sht/75/sht_01.bin
 http://profile.gigaset.net/chagall/unstable/42/2/sht/75/version.bin
 http://profile.gigaset.net/chagall/unstable/42/2/sht/76/sht_01.bin
+http://profile.gigaset.net/chagall/unstable/42/2/sht/76/sht_10.bin
 http://profile.gigaset.net/chagall/unstable/42/2/sht/76/version.bin
 http://profile.gigaset.net/chagall/unstable/42/2/x_bluewin_ch.bin
 http://profile.gigaset.net/chagall/unstable/42/3/c_2108131244_eng.bin
@@ -39150,6 +39155,7 @@ http://profile.gigaset.net/firmware/whale_hs/suota/fake-bl/whale_hx_suota_test__
 http://profile.gigaset.net/logs.tgz
 http://profile.gigaset.net/MaxwellDevelopment/Maxwell10/80_1_2.1.0_maxwell_10-user_firmware_enc.zip
 http://profile.gigaset.net/MaxwellDevelopment/Maxwell3b/GC_MAX_1.11.5-w_rel.bin
+http://profile.gigaset.net/MaxwellDevelopment/Maxwell3b/GC_MAX_1.13.4-pre-release.bin
 http://profile.gigaset.net/MaxwellDevelopment/Maxwell3b/GC_MAX_1.1.803.bin
 http://profile.gigaset.net/MaxwellDevelopment/Other/DECT_info_DE.zip
 http://profile.gigaset.net/MaxwellDevelopment/T500_T300/Celsius_05.07.00.08.iso
