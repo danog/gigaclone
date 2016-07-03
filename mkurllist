@@ -5,6 +5,10 @@ tmp="$dir/tmp"
 rm -r $tmp
 mkdir -p $tmp
 cd $tmp
+[ "$1" == "treegen" ] && {
+	a=$(echo "$2" | sed 's/\.\///g'); cd "$2"; index="$(tree -a -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g')"; echo "$index">index.html; cd "$OLDPWD"
+	exit
+}
 {
   extractlog() {
     tar -xzf logs.tgz
@@ -31,10 +35,10 @@ cd $tmp
     }
     sed -i 's/\/\//\//g;s/\/$//g;s/http:\//http:\/\//g;s/http:\/\/\//http:\/\//g' $dir/urllist
 
-    for dl in $(cat $dir/urllist); do {
+    while read dl; do {
      a=$(curl -w "%{url_effective}\n" -L -f -s -I -S "$dl" -o /dev/null)
      [ $? = "0" ] && echo "$a" >> $dir/final
-    };done
+    };done < $dir/urllist
     mv $dir/final $dir/urllist
     awk '!seen[$0]++' $dir/urllist >$dir/final
     mv $dir/final $dir/urllist
@@ -43,11 +47,11 @@ cd $tmp
   extractbin() {
     echo "Extracting urls..."
     cd $tmp
-    for f in $(grep "\.bin" $dir/urllist);do {
+    grep "\.bin" $dir/urllist | while read f;do {
       [ $(wget -S --spider "$f" 2>&1 | sed '/Length/!d;s/Length\: //g;s/\s.*//g;s/\s//g;s/[^0-9]*//g' | tr -d "\n") -lt 52428800 ] && {
        file=$(wget -qO- "$f" | strings)
        echo "$file" | sed '/http:\/\//!d;/profile.gigaset.net\|update.gigaset.net/!d;s/.*http:\/\//http:\/\//g;s/update\.gigaset/profile\.gigaset/g'>>$tmp/tmp
-       baseurl="$(dirname "$f")"/
+       baseurl=$(dirname "$f")/
        url=$(echo "$file" | sed '/http/d;/\.bin/!d')
        for e in $url;do echo "$baseurl$e">>$tmp/tmp;done
       }
@@ -62,11 +66,11 @@ cd $tmp
     rm -r tree
     mkdir tree
     cd tree
-    for f in $(sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist);do {
+    sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist | while read f;do {
       mkdir -p $(dirname "$f")&>/dev/null
       touch "$f"
     };done
-    for f in $(find . -type d);do a=$(echo "$f" | sed 's/\.\///g'); cd $f; index="$(tree -a -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g')"; echo "$index">index.html; cd $OLDPWD; done
+    find . -type d -exec bash $0 treegen {} \;
     find . -not -iname "index.html" -type f -a -not -name "." -exec rm {} \;
   }
   
