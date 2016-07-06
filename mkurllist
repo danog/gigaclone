@@ -29,7 +29,7 @@ extractlog() {
 rdupes() {
 	if [ "$1" != "" ];then
 		echo "Remove all duplicates for $*"
-		awk -niord '{printf RT?$0chr("0x"substr(RT,2)):$0}' RS=%.. $* $dir/urllist | awk '!seen[$0]++' >$dir/final
+		awk '!seen[$0]++' $* $dir/urllist >$dir/final
 		mv $dir/final $dir/urllist
 		rm $*
 	fi
@@ -64,11 +64,13 @@ treegen() {
 	mkdir tree
 	cd tree
 	sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist | while read f;do
+		f=$(echo "$f" | awk -niord '{printf RT?$0chr("0x"substr(RT,2)):$0}' RS=%..)
+
 		mkdir -p $(dirname "$f")&>/dev/null
 		touch "$f"
 	done
-	find . -type d -exec bash $dir/$0 treegen {} \;
-	find . -not -iname "index.html" -type f -a -not -name "." -exec rm {} \;
+	find . -type d -exec bash $dir/mkurllist treegen "{}" \;
+	find . -not -iname "index.html" -type f -a -not -name "." -exec rm "{}" \;
 }
 
 {
