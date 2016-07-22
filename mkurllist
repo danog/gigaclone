@@ -6,9 +6,10 @@ rm -r "$tmp"
 mkdir -p "$tmp"
 cd "$tmp"
 if [ "$1" == "treegen" ]; then
-	a=$(echo "$2" | sed 's/\.\///g')
-	cd "$2"
-	tree -a -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g' >index.html
+	shift
+	a=$(echo "$*" | sed 's|^'$PWD'/||')
+	cd "$*"
+	tree -a -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a"" -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g' >index.html
 	cd "$OLDPWD"
 	exit
 fi
@@ -66,10 +67,10 @@ treegen() {
 	sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist | while read f;do
 		f=$(echo "$f" | awk -niord '{printf RT?$0chr("0x"substr(RT,2)):$0}' RS=%..)
 
-		mkdir -p $(dirname "$f")&>/dev/null
+		mkdir -p "$(dirname "$f")"&>/dev/null
 		touch "$f"
 	done
-	find . -type d -exec bash $dir/mkurllist treegen "{}" \;
+	find $PWD -type d -exec bash $dir/mkurllist treegen "{}" \;
 	find . -not -iname "index.html" -type f -a -not -name "." -exec rm "{}" \;
 }
 
