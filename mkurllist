@@ -6,9 +6,8 @@ rm -r "$tmp"
 mkdir -p "$tmp"
 cd "$tmp"
 if [ "$1" == "treegen" ]; then
-	shift
-	a=$(echo "$*" | sed "s|$PWD||g")
-	cd "$*"
+	a=$(echo "$2" | sed "s|$1||g")
+	cd "$2"
 	tree -a -T "profile.gigaset.net" -C -H http://profile.gigaset.net/"$a" -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g' >index.html
 	cd "$OLDPWD"
 	exit
@@ -69,7 +68,7 @@ treegen() {
 		mkdir -p "$(dirname "$f")"&>/dev/null
 		touch "$f"
 	done
-	find $PWD -type d -exec bash $dir/mkurllist treegen "{}" \;
+	find $PWD -type d -exec bash $dir/mkurllist treegen "$PWD" "{}" \;
 	find . -not -iname "index.html" -type f -a -not -name "." -exec rm "{}" \;
 }
 
