@@ -7,7 +7,7 @@ mkdir -p "$tmp"
 cd "$tmp"
 if [ "$1" == "treegen" ]; then
 	shift
-	a=$(echo "$*" | tr -d "$PWD")
+	a=$(echo "$*" | sed "s|$PWD||g")
 	cd "$*"
 	tree -a -T "profile.gigaset.net" -C -H http://profile.gigaset.net/"$a" -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g' >index.html
 	cd "$OLDPWD"
