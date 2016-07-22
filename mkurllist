@@ -7,9 +7,9 @@ mkdir -p "$tmp"
 cd "$tmp"
 if [ "$1" == "treegen" ]; then
 	shift
-	a=$(echo "$*" | sed 's|^'$PWD'/||')
+	a=$(echo "$*" | tr -d "$PWD")
 	cd "$*"
-	tree -a -T "profile.gigaset.net" -C -H "http://profile.gigaset.net/"$a"" -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g' >index.html
+	tree -a -T "profile.gigaset.net" -C -H http://profile.gigaset.net/"$a" -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g' >index.html
 	cd "$OLDPWD"
 	exit
 fi
@@ -66,7 +66,6 @@ treegen() {
 	cd tree
 	sed 's/http:\/\/profile.gigaset.net\///g;s/^\/*//g' $dir/urllist | while read f;do
 		f=$(echo "$f" | awk -niord '{printf RT?$0chr("0x"substr(RT,2)):$0}' RS=%..)
-
 		mkdir -p "$(dirname "$f")"&>/dev/null
 		touch "$f"
 	done
