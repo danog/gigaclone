@@ -9,7 +9,8 @@ if [ "$1" == "treegen" ]; then
 	shift
 	a=$(echo "$2" | sed "s|$1||g")
 	cd "$2"
-	tree -a -T "profile.gigaset.net" -C -H http://profile.gigaset.net"$a" -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g' >index.html
+	tree=$(tree -a -T "profile.gigaset.net" -C -H http://profile.gigaset.net"$a" -L 1 | sed 's/net\/\.\//net\//g;s/class=\"DIR\" href=\"http\:\/\/profile\.gigaset\.net/class=\"DIR\" href=\"http\:\/\/daniil\.it\/gigaclone\/tree/g;s/<\/a>/<\/a><br>/g;s/<\/a><br><br>/<\/a><br>/g')
+	echo "$tree" >index.html
 	cd "$OLDPWD"
 	exit
 fi
